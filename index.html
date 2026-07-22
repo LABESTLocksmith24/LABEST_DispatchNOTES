@@ -15,16 +15,18 @@
             box-sizing: border-box; 
         }
 
-        /* Locksmith Slate Top Navigation Header */
+        /* Top Navigation Header */
         .tab-bar { 
             display: flex; 
             background: #1e232a; 
-            border-bottom: 3px solid #d4af37; /* Metallic Gold Accent */
+            border-bottom: 3px solid #d4af37; 
             padding: 8px 20px 0 20px; 
             gap: 10px; 
             flex: 0 0 auto; 
             box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            align-items: center;
         }
+        .tab-group { display: flex; gap: 10px; }
         .tab-btn { 
             padding: 11px 22px; 
             font-weight: 700; 
@@ -38,386 +40,511 @@
             border-bottom: 3px solid transparent; 
             transition: all 0.2s ease; 
         }
-        .tab-btn:hover { 
-            background: rgba(255,255,255,0.08); 
-            color: #ffffff; 
-        }
-        .tab-btn.active { 
-            color: #ffffff; 
-            border-bottom: 3px solid #d4af37; 
-            background: #edf1f5; 
-            color: #1e232a;
-        }
+        .tab-btn:hover { background: rgba(255,255,255,0.08); color: #ffffff; }
+        .tab-btn.active { border-bottom: 3px solid #d4af37; background: #edf1f5; color: #1e232a; }
 
         /* Tab Content Area */
-        .tab-content { 
-            display: none; 
-            flex: 1; 
-            flex-direction: column; 
-            padding: 15px 20px; 
-            overflow: hidden; 
-        }
-        .tab-content.active { 
-            display: flex; 
-        }
+        .tab-content { display: none; flex: 1; flex-direction: column; padding: 12px 18px; overflow: hidden; }
+        .tab-content.active { display: flex; }
 
-        /* Buttons Box */
-        .btn-box { flex: 0 0 auto; display: flex; gap: 10px; margin-bottom: 12px; }
-        button.action-btn { padding: 8px 16px; font-weight: bold; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; background: #fff; color: #222; }
-        .btn-gen { background: #0066cc !important; color: white !important; border: none !important; box-shadow: 0 2px 4px rgba(0,102,204,0.3); }
+        /* General Buttons */
+        button.action-btn { padding: 5px 12px; font-weight: bold; cursor: pointer; border-radius: 18px; border: 1px solid #ccc; background: #fff; color: #222; font-size: 11px; transition: all 0.2s; }
+        .btn-gen { background: #0066cc !important; color: white !important; border: none !important; box-shadow: 0 2px 5px rgba(0,102,204,0.3); }
         .btn-gen:hover { background: #004c99 !important; }
+        .btn-reset { background: #dc3545 !important; color: white !important; border: none !important; font-weight: bold; padding: 5px 14px; border-radius: 18px; box-shadow: 0 2px 5px rgba(220,53,69,0.3); }
+        .btn-reset:hover { background: #bd2130 !important; }
+        .btn-clear-mini { background: #f8f9fa; border: 1px solid #ced4da; padding: 2px 7px; font-size: 10px; border-radius: 12px; color: #495057; font-weight: 600; }
+        .btn-clear-mini:hover { background: #e2e6ea; color: #dc3545; }
+
+        /* Layout Structure */
+        .dispatch-wrapper { display: flex; gap: 12px; height: calc(100vh - 75px); overflow: hidden; }
         
-        /* Master Layout Split */
-        .main-container { display: flex; gap: 20px; flex: 1 1 auto; overflow: hidden; height: calc(100vh - 120px); }
+        /* LEFT FIXED SIDEBAR (Quick Notes + Reminders) */
+        .dispatch-left-panel { width: 320px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px; height: 100%; overflow: hidden; }
+        .left-card { background: white; padding: 12px; border-radius: 16px; border: 1px solid #e1e6eb; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
         
-        /* Left Section: Scrollable Grid Panels */
-        .grid-panel { flex: 2; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; padding-right: 8px; height: 100%; }
-        .wrapper { display: flex; gap: 14px; flex-shrink: 0; }
+        /* RIGHT MAIN GRID (3 COLUMNS) */
+        .dispatch-main-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; height: 100%; overflow-y: auto; padding-right: 4px; }
         
-        /* Right Section: Fixed Summary */
-        .summary-panel { flex: 1; min-width: 320px; max-width: 380px; height: 100%; display: flex; flex-direction: column; }
+        .col { background: white; padding: 10px; border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid #e1e6eb; min-width: 0; display: flex; flex-direction: column; gap: 8px; }
+        .col-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e9ecef; padding-bottom: 4px; margin-bottom: 2px; }
+        .col-header h2 { margin: 0; font-size: 11px; color: #1e232a; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .brand-subtext { font-size: 9px; color: #666; font-style: italic; margin-top: -4px; margin-bottom: 4px; }
+        .section-subhead { font-size: 10px; font-weight: bold; color: #d4af37; background: #1e232a; padding: 3px 6px; border-radius: 12px; margin: 4px 0; text-align: center; }
+
+        .row { display: flex; align-items: center; margin: 3px 0; font-size: 12px; gap: 4px; height: 25px; }
+        .dns-row { display: flex; align-items: center; margin: 3px 0; font-size: 12px; color: #333; gap: 5px; height: 22px; }
         
-        /* Column styling */
-        .col { flex: 1; background: white; padding: 12px 14px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); border: 1px solid #e1e6eb; min-width: 0; }
-        h2 { margin-top: 0; border-bottom: 2px solid #e9ecef; padding-bottom: 6px; font-size: 14px; color: #1e232a; font-weight: 700; letter-spacing: 0.3px; }
+        select { font-size: 11px; padding: 1px; flex: 0 0 44px; width: 44px; box-sizing: border-box; text-align: center; border-radius: 12px; border: 1px solid #ccc; outline: none; }
         
-        /* Row Component Layout - COMPACT & SPACE-SAVING */
-        .row { display: flex; align-items: center; margin: 4px 0; font-size: 13px; gap: 6px; height: 28px; }
-        .dns-row { display: flex; align-items: center; margin: 4px 0; font-size: 13px; color: #333; gap: 6px; height: 28px; }
+        .tech-identity { flex: 0 0 auto; display: flex; gap: 3px; align-items: center; min-width: 80px; max-width: 100px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .rate-badge { font-weight: bold; min-width: 28px; font-size: 10px; color: #d4af37; background: #1e232a; text-align: center; border-radius: 8px; padding: 1px 0; }
+        .name-label { font-weight: 600; font-size: 11px; color: #2c3e50; overflow: hidden; text-overflow: ellipsis; }
         
-        /* Compact Inputs and Identifiers */
-        select { font-size: 13px; padding: 2px; flex: 0 0 52px; width: 52px; box-sizing: border-box; text-align: center; border-radius: 4px; border: 1px solid #ccc; }
+        .reason-input { display: none; flex: 0 0 75px; padding: 2px 4px; font-size: 10px; border: 1px solid #dc3545; border-radius: 12px; background: #fff0f0; outline: none; box-sizing: border-box; }
+        .note-column { flex: 1 1 auto; font-size: 10px; color: #666; font-style: italic; border-left: 2px solid #e2e8f0; padding-left: 4px; margin-left: 2px; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         
-        .tech-identity { 
-            flex: 0 0 auto; 
-            display: flex; 
-            gap: 5px; 
-            align-items: center; 
-            min-width: 95px; 
-            max-width: 130px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .rate-badge { font-weight: bold; min-width: 32px; font-size: 12px; color: #d4af37; background: #1e232a; text-align: center; border-radius: 3px; padding: 1px 0; }
-        .name-label { font-weight: 600; font-size: 13px; color: #2c3e50; overflow: hidden; text-overflow: ellipsis; }
+        .msg { font-weight: bold; color: #28a745; flex: 0 0 auto; margin-left: auto; padding-left: 2px; font-size: 9px; }
+        .dns-tag { background: #ffe6e6; color: #cc0000; padding: 1px 6px; border-radius: 10px; font-size: 10px; font-weight: bold; display: inline-block; min-width: 48px; text-align: center; box-sizing: border-box; }
         
-        /* Dynamic Reason Box when ❌ selected */
-        .reason-input {
-            display: none;
-            flex: 0 0 110px;
-            padding: 3px 6px;
-            font-size: 11px;
-            border: 1px solid #dc3545;
-            border-radius: 4px;
-            background: #fff0f0;
-            outline: none;
+        /* IN-SECTION RESULT BOX */
+        .section-result-box { background: #fdfcf7; border: 1px solid #d4af37; border-left: 4px solid #d4af37; border-radius: 10px; padding: 6px 8px; font-family: monospace; font-size: 11px; color: #1e232a; display: none; flex-direction: column; gap: 4px; white-space: pre-wrap; }
+        .section-result-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #d4af37; padding-bottom: 2px; }
+
+        /* MODAL OVERLAYS */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.35); backdrop-filter: blur(4px); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-box { background: #ffffff; width: 420px; max-width: 90%; border-radius: 24px; border: 3px solid #d4af37; box-shadow: 0 12px 30px rgba(0,0,0,0.2); display: flex; flex-direction: column; overflow: hidden; animation: bubblePop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        @keyframes bubblePop { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .modal-header { background: #1e232a; color: #d4af37; padding: 12px 18px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 13px; border-bottom: 2px solid #d4af37; }
+        .modal-body { padding: 16px; background: #fcfdfd; color: #1e232a; font-family: "Courier New", Courier, monospace; font-size: 12px; font-weight: 600; white-space: pre-wrap; line-height: 1.4; border-bottom: 1px solid #f0f0f0; max-height: 260px; overflow-y: auto; }
+        .modal-footer { padding: 10px 18px; background: #f8f9fa; display: flex; justify-content: space-between; align-items: center; }
+
+        /* TICKET ACTION CHECKBOXES & BADGES */
+        .ticket-actions-box { background: #f8f9fa; border: 1px solid #e1e6eb; border-radius: 10px; padding: 6px; margin-bottom: 6px; display: flex; flex-direction: column; gap: 4px; font-size: 11px; }
+        .checkbox-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+        .checkbox-item { display: flex; align-items: center; gap: 4px; font-weight: 600; color: #2c3e50; cursor: pointer; }
+        .ezra-badge { display: none; background: #e0f2fe; color: #0284c7; padding: 2px 8px; border-radius: 12px; font-weight: bold; font-size: 11px; align-items: center; width: fit-content; }
+        .close-tech-box { display: none; gap: 4px; align-items: center; margin-top: 2px; }
+
+        /* SMS DRAFTS TAB REDESIGN */
+        .sms-container { display: flex; flex-direction: column; gap: 10px; height: calc(100vh - 85px); overflow-y: auto; }
+        .store-selector-row { background: white; border: 1px solid #cce5ff; padding: 12px; border-radius: 16px; display: flex; gap: 12px; box-shadow: 0 2px 8px rgba(0,102,204,0.06); }
+        .store-btns-list { flex: 1; display: flex; flex-direction: column; gap: 5px; max-width: 280px; }
+        .store-btn { background: #f0f7ff; border: 1px solid #b8daff; padding: 7px 14px; text-align: left; border-radius: 20px; cursor: pointer; transition: all 0.2s ease; }
+        .store-btn:hover { border-color: #0066cc; background: #e2f0ff; }
+        .store-btn.active { border-color: #0066cc; background: #0066cc; color: white; font-weight: bold; box-shadow: 0 2px 6px rgba(0,102,204,0.25); }
+        .store-btn .store-title { font-size: 11px; }
+        
+        .store-preview-box { flex: 2; background: #f4f9ff; color: #1e232a; font-family: "Courier New", Courier, monospace; padding: 12px; border-radius: 12px; white-space: pre-wrap; font-size: 11px; line-height: 1.4; border: 1px solid #b8daff; border-left: 4px solid #0066cc; }
+
+        .sms-bottom-row { display: flex; flex-direction: column; gap: 10px; }
+        .compact-card { background: white; padding: 12px 16px; border-radius: 16px; box-shadow: 0 2px 8px rgba(0,102,204,0.06); border: 1px solid #cce5ff; display: flex; flex-direction: column; gap: 8px; }
+        .sms-side-by-side { display: flex; gap: 14px; align-items: flex-start; }
+        
+        .ocean-select, .ocean-input {
+            background: #f0f7ff; 
+            border: 1px solid #99c2ff; 
+            border-radius: 18px; 
+            padding: 5px 12px; 
+            font-size: 11px; 
+            color: #004085; 
+            outline: none; 
+            transition: all 0.2s;
+            width: 100%;
             box-sizing: border-box;
         }
-        .reason-input:focus {
-            border-color: #bd2130;
-            box-shadow: 0 0 3px rgba(220,53,69,0.4);
-        }
+        .ocean-select:focus, .ocean-input:focus { border-color: #0066cc; box-shadow: 0 0 6px rgba(0,102,204,0.3); background: #ffffff; }
 
-        /* Compact & Aligned Note Column */
-        .note-column { 
-            flex: 1 1 auto; 
-            font-size: 11px; 
-            color: #555; 
-            font-style: italic; 
-            border-left: 2px solid #e2e8f0; 
-            padding-left: 6px; 
-            margin-left: 2px;
-            min-width: 0; 
-            white-space: nowrap; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-        }
+        .form-group { display: flex; flex-direction: column; gap: 3px; }
+        .form-group label { font-size: 10px; font-weight: bold; color: #004085; }
+
+        .preview-box { background: #f8fbff; color: #1e232a; font-family: "Courier New", Courier, monospace; padding: 8px 10px; border-radius: 10px; white-space: pre-wrap; font-size: 11px; line-height: 1.3; border: 1px solid #cce5ff; border-left: 3px solid #0066cc; flex: 1; }
+
+        /* NOTEPAD TAB */
+        .notepad-wrapper { display: flex; gap: 12px; height: calc(100vh - 85px); }
+        .notepad-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px; }
+        .notepad-card { background: white; border: 1px solid #e1e6eb; border-radius: 14px; padding: 10px; display: flex; flex-direction: column; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+        .notepad-card h3 { margin: 0 0 6px 0; font-size: 11px; color: #0066cc; font-weight: bold; border-bottom: 1px solid #eee; padding-bottom: 4px; display: flex; justify-content: space-between; }
+        .notepad-card textarea { flex: 1; border: 1px solid #ccc; border-radius: 10px; padding: 8px; font-size: 11px; resize: none; outline: none; font-family: monospace; white-space: pre-wrap; word-wrap: break-word; line-height: 1.3; }
         
-        .msg { font-weight: bold; color: #28a745; flex: 0 0 auto; margin-left: auto; padding-left: 4px; font-size: 12px; }
-        .dns-tag { background: #ffe6e6; color: #cc0000; padding: 1px 5px; border-radius: 3px; font-size: 11px; font-weight: bold; display: inline-block; min-width: 52px; text-align: center; box-sizing: border-box; }
-        .summary { background: #1e232a; color: #00ff88; padding: 15px; border-radius: 6px; display: none; white-space: pre-wrap; font-family: "Courier New", Courier, monospace; border-left: 4px solid #d4af37; font-size: 13px; margin-top: 10px; flex: 1; overflow-y: auto; }
+        /* REMINDERS LIST */
+        .reminder-input-box { display: flex; gap: 4px; margin-bottom: 6px; }
+        .reminder-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
+        .reminder-item { display: flex; align-items: center; gap: 5px; background: #f8f9fa; padding: 4px 8px; border-radius: 10px; border: 1px solid #eee; font-size: 11px; white-space: pre-wrap; word-break: break-word; }
+        .reminder-item.completed span { text-decoration: line-through; color: #888; }
+        .reminder-item span { flex: 1; }
+        .btn-del { background: transparent; border: none; cursor: pointer; font-size: 11px; color: #dc3545; }
 
-        /* STORES TAB STYLES */
-        .stores-container { display: flex; gap: 20px; height: calc(100vh - 90px); }
-        .store-selector-panel { flex: 1; max-width: 320px; display: flex; flex-direction: column; gap: 10px; }
-        .store-btn {
-            background: white;
-            border: 1px solid #e1e6eb;
-            padding: 12px 15px;
-            text-align: left;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
-        }
-        .store-btn:hover { border-color: #0066cc; background: #f0f7ff; }
-        .store-btn.active { border-color: #0066cc; background: #e7f1ff; font-weight: bold; border-left: 4px solid #0066cc; }
-        .store-btn .store-title { font-size: 14px; color: #1e232a; }
-        .store-btn .store-sub { font-size: 11px; color: #666; margin-top: 2px; }
-
-        .store-preview-panel { flex: 2; background: white; padding: 20px; border-radius: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.06); border: 1px solid #e1e6eb; display: flex; flex-direction: column; }
-        .preview-box {
-            background: #1e232a;
-            color: #00ff88;
-            font-family: "Courier New", Courier, monospace;
-            padding: 20px;
-            border-radius: 6px;
-            white-space: pre-wrap;
-            flex: 1;
-            font-size: 14px;
-            line-height: 1.5;
-            overflow-y: auto;
-            margin-bottom: 15px;
-            border-left: 4px solid #d4af37;
-        }
-
-        /* SMS TAB STYLES */
-        .sms-container { display: flex; gap: 20px; height: calc(100vh - 90px); }
-        .sms-card {
-            flex: 1;
-            background: white;
-            padding: 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
-            border: 1px solid #e1e6eb;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-        .form-group { display: flex; flex-direction: column; gap: 5px; }
-        .form-group label { font-size: 12px; font-weight: bold; color: #1e232a; }
-        .form-control { padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 13px; width: 100%; box-sizing: border-box; }
-        
-        .copy-toast {
-            display: none;
-            font-weight: bold;
-            color: #28a745;
-            font-size: 13px;
-            align-self: center;
-        }
+        .copy-toast { display: none; font-weight: bold; color: #28a745; font-size: 10px; align-self: center; }
     </style>
 </head>
 <body>
 
     <!-- TOP NAVIGATION TAB BAR -->
     <div class="tab-bar">
-        <button class="tab-btn active" onclick="switchTab('dispatch-tab', this)">🔑 TECHNICIAN DISPATCH</button>
-        <button class="tab-btn" onclick="switchTab('stores-tab', this)">🏪 STORES</button>
-        <button class="tab-btn" onclick="switchTab('sms-tab', this)">💬 SMS DRAFTS</button>
+        <div class="tab-group">
+            <button class="tab-btn active" onclick="switchTab('dispatch-tab', this)">🔑 TECHNICIAN DISPATCH</button>
+            <button class="tab-btn" onclick="switchTab('notepad-tab', this)">📝 NOTEPAD</button>
+            <button class="tab-btn" onclick="switchTab('sms-tab', this)">💬 SMS DRAFTS</button>
+        </div>
+    </div>
+
+    <!-- CUSTOM POPUP ALERT MODAL -->
+    <div id="custom-alert-modal" class="modal-overlay">
+        <div class="modal-box" style="width: 360px;">
+            <div id="alert-modal-header" class="modal-header">
+                <span id="alert-modal-title">NOTIFICATION</span>
+                <button style="background:none; border:none; color:#d4af37; font-weight:bold; cursor:pointer;" onclick="closeCustomAlert()">✖</button>
+            </div>
+            <div id="alert-modal-msg" class="modal-body" style="font-family: inherit; font-size: 12px; text-align: center;"></div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button id="alert-modal-btn" class="action-btn btn-gen" onclick="closeCustomAlert()">Thanks!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- BUBBLY POPUP MODAL FOR GENERATED RESULT -->
+    <div id="result-modal" class="modal-overlay">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span>🔑 DISPATCH RESULT GENERATED</span>
+                <button style="background:none; border:none; color:#d4af37; font-weight:bold; cursor:pointer; font-size:14px;" onclick="closeModal()">✖</button>
+            </div>
+            <div id="modal-text" class="modal-body"></div>
+            <div class="modal-footer">
+                <span id="popup-toast" class="copy-toast">✓ Copied to Clipboard!</span>
+                <div style="display:flex; gap:6px;">
+                    <button class="action-btn btn-gen" onclick="copyModalText()">📋 Copy Result</button>
+                    <button class="action-btn" onclick="closeModal()">Thanks!</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- TAB 1: TECHNICIAN DISPATCH -->
     <div id="dispatch-tab" class="tab-content active">
-        <div class="btn-box">
-            <button class="action-btn btn-gen" onclick="gen()">Generate Text List</button>
-            <button class="action-btn" onclick="resetAll()">Reset All</button>
+        
+        <!-- HEADER WITH EXCLUSIVE RESET ALL BUTTON -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size:11px; color:#555; font-weight:600;">Pasting text in Dispatch Notes automatically formats uLeadz data line-by-line!</span>
+            <button class="action-btn btn-reset" onclick="resetAll()">🔄 Reset All Choices</button>
         </div>
 
-        <div class="main-container">
+        <div class="dispatch-wrapper">
             
-            <!-- LEFT PANELS (SCROLLABLE GRID AREAS) -->
-            <div class="grid-panel">
-                
-                <!-- ROW 1 -->
-                <div class="wrapper">
-                    <div class="col">
-                        <h2>🏠 HOUSE TECH</h2>
-                        <div id="h-grid"></div>
+            <!-- LEFT SIDE PANEL (DISPATCH NOTES + REMINDERS) -->
+            <div class="dispatch-left-panel">
+                <!-- QUICK DISPATCH NOTES -->
+                <div class="left-card" style="flex: 1.5;">
+                    <h3 style="margin: 0 0 6px 0; font-size: 12px; color: #1e232a; font-weight: bold; border-bottom: 2px solid #e9ecef; padding-bottom: 4px;">📝 QUICK DISPATCH NOTES</h3>
+                    
+                    <!-- TICKET ACTION OPTIONS -->
+                    <div class="ticket-actions-box">
+                        <div class="checkbox-row">
+                            <label class="checkbox-item"><input type="checkbox" id="chk-eran" onchange="handleTicketActions(this)"> Eran = OK</label>
+                            <label class="checkbox-item"><input type="checkbox" id="chk-ezra" onchange="handleTicketActions(this)"> Call Ezra</label>
+                            <label class="checkbox-item"><input type="checkbox" id="chk-close" onchange="handleTicketActions(this)"> Close Ticket</label>
+                        </div>
+                        <div id="ezra-badge" class="ezra-badge">Call 📲 (310) 739-5850</div>
+                        <div id="close-tech-box" class="close-tech-box">
+                            <span style="font-weight:bold; color:#dc3545;">Tech Name:</span>
+                            <input type="text" id="close-tech-name" class="ocean-input" style="padding:2px 8px; font-size:10px;" placeholder="Type tech name..." oninput="handleTicketActions()">
+                        </div>
                     </div>
-                    <div class="col">
-                        <h2>🚗 CAR TECH</h2>
-                        <div id="c-grid"></div>
+
+                    <textarea id="dispatch-quick-note" style="flex: 1; border: 1px solid #ccc; border-radius: 10px; padding: 8px; font-size: 11px; resize: none; font-family: monospace; white-space: pre-wrap;" placeholder="Paste uLeadz ticket here..." oninput="saveQuickNote()"></textarea>
+
+                    <div style="display: flex; gap: 4px; align-items: center; margin-top: 6px;">
+                        <select id="target-ticket-select" class="ocean-select" style="flex:1; font-size:10px; padding:3px 6px;">
+                            <option value="1">Pending Ticket #1</option>
+                            <option value="2">Pending Ticket #2</option>
+                            <option value="3">Pending Ticket #3</option>
+                            <option value="4">Pending Ticket #4</option>
+                            <option value="5">Pending Ticket #5</option>
+                            <option value="6">Pending Ticket #6</option>
+                        </select>
+                        <button class="action-btn btn-gen" style="font-size:10px; padding:4px 8px;" onclick="sendNoteToTicket()">📌 Save</button>
+                        <button class="action-btn" style="font-size:10px; padding:4px 8px;" onclick="copyQuickNote()">📋 Copy</button>
+                        <button class="action-btn btn-clear-mini" style="font-size:10px; padding:4px 8px;" onclick="clearQuickNote()">🧹 Clear</button>
                     </div>
                 </div>
 
-                <!-- ROW 2 -->
-                <div class="wrapper">
-                    <div class="col" style="background: #fffdf5;">
-                        <h2>🚨 HOUSE TECH (EMERGENCY)</h2>
-                        <div id="he-grid"></div>
+                <!-- REMINDERS SECTION -->
+                <div class="left-card" style="flex: 1;">
+                    <h3 style="margin: 0 0 6px 0; font-size: 11px; color: #1e232a; font-weight: bold; border-bottom: 2px solid #e9ecef; padding-bottom: 4px;">📌 REMINDERS</h3>
+                    <div class="reminder-input-box">
+                        <input type="text" id="rem-input-dispatch" class="ocean-input" style="border-radius:12px;" placeholder="Add new reminder..." oninput="syncReminderInput('dispatch')" onkeydown="if(event.key==='Enter') addReminder('dispatch')">
+                        <button class="action-btn btn-gen" style="padding:4px 8px;" onclick="addReminder('dispatch')">Add</button>
                     </div>
-                    <div class="col" style="background: #f1f9ff;">
-                        <h2>🏍️ MOTORCYCLES</h2>
+                    <div id="reminder-container-dispatch" class="reminder-list"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT MAIN GRID (3 COLUMNS) -->
+            <div class="dispatch-main-grid">
+                
+                <!-- COL 1: HOUSE & EMERGENCY TECH -->
+                <div class="col">
+                    <div class="col-header">
+                        <h2>🏠 HOUSE & EMERGENCY</h2>
+                        <div style="display:flex; gap:4px; align-items:center;">
+                            <button class="btn-clear-mini" onclick="clearSectionChoices('h')" title="Clear section choices">🧹 Clear</button>
+                            <button class="action-btn btn-gen" style="padding:3px 8px;" onclick="genSection('h-grid', 'HOUSE & EMERGENCY TECH')">Generate</button>
+                        </div>
+                    </div>
+                    <div id="h-grid-res" class="section-result-box"></div>
+                    <div class="section-subhead">🏠 House Techs</div>
+                    <div id="h-grid-house"></div>
+                    <div class="section-subhead">🚨 Emergency Techs</div>
+                    <div id="h-grid-emerg"></div>
+                </div>
+
+                <!-- COL 2: CAR TECH & MOTORCYCLES -->
+                <div class="col">
+                    <!-- CAR TECH -->
+                    <div style="flex:1; display:flex; flex-direction:column;">
+                        <div class="col-header">
+                            <h2>🚗 CAR TECH</h2>
+                            <div style="display:flex; gap:4px; align-items:center;">
+                                <button class="btn-clear-mini" onclick="clearSectionChoices('c')" title="Clear section choices">🧹 Clear</button>
+                                <button class="action-btn btn-gen" style="padding:3px 8px;" onclick="genSection('c-grid', 'CAR TECH')">Generate</button>
+                            </div>
+                        </div>
+                        <div id="c-grid-res" class="section-result-box"></div>
+                        <div id="c-grid"></div>
+                    </div>
+
+                    <!-- MOTORCYCLES -->
+                    <div style="flex:0.8; display:flex; flex-direction:column; border-top: 2px dashed #e1e6eb; padding-top: 8px; margin-top: 4px; background: #f1f9ff; padding: 6px; border-radius: 10px;">
+                        <div class="col-header">
+                            <h2>🏍️ MOTORCYCLES</h2>
+                            <div style="display:flex; gap:4px; align-items:center;">
+                                <button class="btn-clear-mini" onclick="clearSectionChoices('m')" title="Clear section choices">🧹 Clear</button>
+                                <button class="action-btn btn-gen" style="padding:3px 8px;" onclick="genSection('m-grid', 'MOTORCYCLES')">Generate</button>
+                            </div>
+                        </div>
+                        <div id="m-grid-res" class="section-result-box"></div>
                         <div id="m-grid"></div>
                     </div>
                 </div>
 
-                <!-- ROW 3 -->
-                <div class="wrapper">
-                    <div class="col" style="background: #fdfaf2;">
-                        <h2>🇪🇺 GERMAN TECH</h2>
+                <!-- COL 3: GERMAN TECH & DO NOT SEND -->
+                <div class="col">
+                    <!-- GERMAN TECH -->
+                    <div style="flex:1; display:flex; flex-direction:column; background: #fdfaf2; padding: 6px; border-radius: 10px;">
+                        <div class="col-header" style="border-bottom:none; margin-bottom:0;">
+                            <h2>🇪🇺 GERMAN TECH</h2>
+                            <div style="display:flex; gap:4px; align-items:center;">
+                                <button class="btn-clear-mini" onclick="clearSectionChoices('g')" title="Clear section choices">🧹 Clear</button>
+                                <button class="action-btn btn-gen" style="padding:3px 8px;" onclick="genSection('g-grid', 'GERMAN TECH')">Generate</button>
+                            </div>
+                        </div>
+                        <div class="brand-subtext">Audi, BMW, Mercedes-Benz, Volkswagen, Volvo</div>
+                        <div id="g-grid-res" class="section-result-box"></div>
                         <div id="g-grid"></div>
                     </div>
-                    <div class="col" style="background: #fff5f5;">
-                        <h2>🚫 DO NOT SEND (View Only)</h2>
+
+                    <!-- DO NOT SEND -->
+                    <div style="flex:1; display:flex; flex-direction:column; background: #fff5f5; border-top: 2px dashed #ffe6e6; padding: 6px; border-radius: 10px; margin-top: 4px; overflow-y: auto;">
+                        <h3 style="margin: 0 0 6px 0; font-size: 11px; color: #cc0000; font-weight: bold; border-bottom: 2px solid #ffe6e6; padding-bottom: 4px;">🚫 DO NOT SEND (View Only)</h3>
                         <div id="dns-grid"></div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- RIGHT PANEL (SUMMARY RESULT) -->
-            <div class="summary-panel">
-                <div class="col" style="background: #ffffff; display: flex; flex-direction: column; height: 100%; box-sizing: border-box;">
-                    <h2>📋 GENERATED TEXT RESULT</h2>
-                    <div id="out" class="summary"></div>
-                    
-                    <!-- Copy Result Button Box -->
-                    <div id="out-btn-box" style="display: none; margin-top: 12px; align-items: center; gap: 10px;">
-                        <button class="action-btn btn-gen" style="padding: 8px 16px;" onclick="copyDispatchText()">📋 Copy Result</button>
-                        <span id="dispatch-toast" class="copy-toast">✓ Copied!</span>
+        </div>
+    </div>
+
+    <!-- TAB 2: NOTEPAD -->
+    <div id="notepad-tab" class="tab-content">
+        <div class="notepad-wrapper">
+            <div class="notepad-grid">
+                <div class="notepad-card"><h3><span>Pending Ticket #1</span><button class="action-btn" style="padding:1px 6px; font-size:10px;" onclick="clearNotepad(1)">Clear</button></h3><textarea id="np-1" oninput="saveNotepad(1)"></textarea></div>
+                <div class="notepad-card"><h3><span>Pending Ticket #2</span><button class="action-btn" style="padding:1px 6px; font-size:10px;" onclick="clearNotepad(2)">Clear</button></h3><textarea id="np-2" oninput="saveNotepad(2)"></textarea></div>
+                <div class="notepad-card"><h3><span>Pending Ticket #3</span><button class="action-btn" style="padding:1px 6px; font-size:10px;" onclick="clearNotepad(3)">Clear</button></h3><textarea id="np-3" oninput="saveNotepad(3)"></textarea></div>
+                <div class="notepad-card"><h3><span>Pending Ticket #4</span><button class="action-btn" style="padding:1px 6px; font-size:10px;" onclick="clearNotepad(4)">Clear</button></h3><textarea id="np-4" oninput="saveNotepad(4)"></textarea></div>
+                <div class="notepad-card"><h3><span>Pending Ticket #5</span><button class="action-btn" style="padding:1px 6px; font-size:10px;" onclick="clearNotepad(5)">Clear</button></h3><textarea id="np-5" oninput="saveNotepad(5)"></textarea></div>
+                <div class="notepad-card"><h3><span>Pending Ticket #6</span><button class="action-btn" style="padding:1px 6px; font-size:10px;" onclick="clearNotepad(6)">Clear</button></h3><textarea id="np-6" oninput="saveNotepad(6)"></textarea></div>
+            </div>
+
+            <!-- REMINDERS PANEL IN NOTEPAD TAB -->
+            <div class="left-card" style="width: 280px; flex-shrink: 0; height: 100%; box-sizing: border-box;">
+                <h3 style="margin: 0 0 6px 0; font-size: 11px; color: #1e232a; font-weight: bold; border-bottom: 2px solid #e9ecef; padding-bottom: 4px;">📌 REMINDERS</h3>
+                <div class="reminder-input-box">
+                    <input type="text" id="rem-input-np" class="ocean-input" style="border-radius:12px;" placeholder="Add new reminder..." oninput="syncReminderInput('np')" onkeydown="if(event.key==='Enter') addReminder('np')">
+                    <button class="action-btn btn-gen" style="padding:4px 8px;" onclick="addReminder('np')">Add</button>
+                </div>
+                <div id="reminder-container-np" class="reminder-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: SMS DRAFTS -->
+    <div id="sms-tab" class="tab-content">
+        <div class="sms-container">
+            <!-- ROW 1: SELECT STORE -->
+            <div class="store-selector-row">
+                <div class="store-btns-list">
+                    <h2 style="font-size:12px; margin:0 0 2px 0; color:#004085;">🏪 SELECT STORE</h2>
+                    <div class="store-btn active" onclick="selectStore(0, this)">
+                        <div class="store-title">🔑 L.A. Best Locksmith</div>
+                    </div>
+                    <div class="store-btn" onclick="selectStore(1, this)">
+                        <div class="store-title">🔑 A+ Security Lock & Key</div>
+                    </div>
+                    <div class="store-btn" onclick="selectStore(2, this)">
+                        <div class="store-title">🔑 Keys Locksmith</div>
+                    </div>
+                    <div class="store-btn" onclick="selectStore(3, this)">
+                        <div class="store-title">🔑 A+ Capital Locksmith</div>
+                    </div>
+                    <div class="store-btn" onclick="selectStore(4, this)">
+                        <div class="store-title">🔑 Express Locksmith</div>
+                    </div>
+                </div>
+
+                <div style="flex:1; display:flex; flex-direction:column; gap:6px;">
+                    <div id="store-text-output" class="store-preview-box"></div>
+                    <div style="display: flex; gap: 8px; align-items: center;">
+                        <button class="action-btn btn-gen" onclick="copyStoreText()">📋 Copy Store Text</button>
+                        <span id="store-copy-toast" class="copy-toast">✓ Copied!</span>
                     </div>
                 </div>
             </div>
 
+  
+
+<!-- ROW 2: REDESIGNED SMS DRAFTS -->
+            <div class="sms-bottom-row">
+                <!-- SMS 1: PHOTO REQUEST -->
+                <div class="compact-card">
+                    <h2 style="font-size:12px; margin:0 0 4px 0; color:#004085; border-bottom: 1px solid #cce5ff; padding-bottom: 4px;">📸 PHOTO REQUEST SMS</h2>
+                    <div class="sms-side-by-side">
+                        <!-- LEFT SIDE: CONTROLS -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                            <div class="form-group">
+                                <label>Company Name:</label>
+                                <select id="photo-company" class="ocean-select" onchange="updatePhotoSMS()">
+                                    <option value="LA BEST Locksmith">L.A. Best Locksmith</option>
+                                    <option value="A+ Security Lock & Key">A+ Security Lock & Key</option>
+                                    <option value="Keys Locksmith">Keys Locksmith</option>
+                                    <option value="A+ Capital Locksmith">A+ Capital Locksmith</option>
+                                    <option value="Express Locksmith">Express Locksmith</option>
+                                    <option value="Locksmith Blue Santa Monica">Locksmith Blue Santa Monica</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Requested Photo Type:</label>
+                                <select id="photo-type" class="ocean-select" onchange="togglePhotoCustom()">
+                                    <option value="Both sides of your Key">Both sides of your Key</option>
+                                    <option value="Key Fob">Key Fob</option>
+                                    <option value="Door Lock">Door Lock</option>
+                                    <option value="Lock and Key">Lock and Key</option>
+                                    <option value="Other">Other (Custom Text)...</option>
+                                </select>
+                            </div>
+                            <div class="form-group" id="custom-photo-group" style="display: none;">
+                                <label>Custom Photo Requirement:</label>
+                                <input type="text" id="custom-photo-input" class="ocean-input" placeholder="e.g. ignition cylinder..." oninput="updatePhotoSMS()">
+                            </div>
+                        </div>
+
+                        <!-- RIGHT SIDE: PREVIEW & COPY -->
+                        <div style="flex: 1.2; display: flex; flex-direction: column; gap: 6px;">
+                            <div id="photo-sms-preview" class="preview-box"></div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <button class="action-btn btn-gen" onclick="copySMS('photo-sms-preview', 'photo-toast')">📋 Copy SMS</button>
+                                <span id="photo-toast" class="copy-toast">✓ Copied!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMS 2: TICKET ASSIGNED -->
+                <div class="compact-card">
+                    <h2 style="font-size:12px; margin:0 0 4px 0; color:#004085; border-bottom: 1px solid #cce5ff; padding-bottom: 4px;">🎫 TICKET ASSIGNED SMS</h2>
+                    <div class="sms-side-by-side">
+                        <!-- LEFT SIDE: CONTROLS -->
+                        <div style="flex: 1; display: flex; flex-direction: column; gap: 8px;">
+                            <div class="form-group">
+                                <label>Company Name:</label>
+                                <select id="assign-company" class="ocean-select" onchange="updateAssignSMS()">
+                                    <option value="LA BEST Locksmith">L.A. Best Locksmith</option>
+                                    <option value="A+ Security Lock & Key">A+ Security Lock & Key</option>
+                                    <option value="Keys Locksmith">Keys Locksmith</option>
+                                    <option value="A+ Capital Locksmith">A+ Capital Locksmith</option>
+                                    <option value="Express Locksmith">Express Locksmith</option>
+                                    <option value="Locksmith Blue Santa Monica">Locksmith Blue Santa Monica</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Notification Status:</label>
+                                <select id="assign-status" class="ocean-select" onchange="updateAssignSMS()">
+                                    <option value="enroute">Assigned & En Route</option>
+                                    <option value="calling">Locksmith Trying to Call</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT SIDE: PREVIEW & COPY -->
+                        <div style="flex: 1.2; display: flex; flex-direction: column; gap: 6px;">
+                            <div id="assign-sms-preview" class="preview-box"></div>
+                            <div style="display: flex; gap: 8px; align-items: center;">
+                                <button class="action-btn btn-gen" onclick="copySMS('assign-sms-preview', 'assign-toast')">📋 Copy SMS</button>
+                                <span id="assign-toast" class="copy-toast">✓ Copied!</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- TAB 2: STORES -->
-    <div id="stores-tab" class="tab-content">
-        <div class="stores-container">
-            <!-- Left Store Picker -->
-            <div class="store-selector-panel">
-                <h2>🏪 SELECT STORE</h2>
-                <div class="store-btn active" onclick="selectStore(0, this)">
-                    <div class="store-title">L.A. Best Locksmith</div>
-                    <div class="store-sub">La Cienega Blvd (Near Ross)</div>
-                </div>
-                <div class="store-btn" onclick="selectStore(1, this)">
-                    <div class="store-title">A+ Security Lock & Key</div>
-                    <div class="store-sub">S Robertson Blvd</div>
-                </div>
-                <div class="store-btn" onclick="selectStore(2, this)">
-                    <div class="store-title">Keys Locksmith</div>
-                    <div class="store-sub">W Olympic Blvd (Dunkin Donut)</div>
-                </div>
-                <div class="store-btn" onclick="selectStore(3, this)">
-                    <div class="store-title">A+ Capital Locksmith</div>
-                    <div class="store-sub">S Hoover St (Yum Yum Donut)</div>
-                </div>
-                <div class="store-btn" onclick="selectStore(4, this)">
-                    <div class="store-title">Express Locksmith</div>
-                    <div class="store-sub">Santa Monica Blvd (West Hollywood)</div>
-                </div>
-            </div>
-
-            <!-- Right Preview & Copy Panel -->
-            <div class="store-preview-panel">
-                <h2>📱 CUSTOMER SMS TEXT FORMAT</h2>
-                <div id="store-text-output" class="preview-box"></div>
-                <div style="display: flex; gap: 15px; align-items: center;">
-                    <button class="action-btn btn-gen" style="padding: 10px 20px;" onclick="copyStoreText()">📋 Copy Store Text</button>
-                    <span id="store-copy-toast" class="copy-toast">✓ Text copied to clipboard!</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TAB 3: SMS -->
-    <div id="sms-tab" class="tab-content">
-        <div class="sms-container">
-            
-            <!-- SMS MODULE 1: PHOTO REQUEST -->
-            <div class="sms-card">
-                <h2>📸 PHOTO REQUEST SMS</h2>
-                
-                <div class="form-group">
-                    <label>Select Company:</label>
-                    <select id="photo-company" class="form-control" style="width:100%; text-align:left;" onchange="updatePhotoSMS()">
-                        <option value="LA BEST Locksmith">L.A. Best Locksmith</option>
-                        <option value="A+ Security Lock & Key">A+ Security Lock & Key</option>
-                        <option value="Keys Locksmith">Keys Locksmith</option>
-                        <option value="A+ Capital Locksmith">A+ Capital Locksmith</option>
-                        <option value="Express Locksmith">Express Locksmith</option>
-                        <option value="Locksmith Blue Santa Monica">Locksmith Blue Santa Monica</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>Request Photo Of:</label>
-                    <select id="photo-type" class="form-control" style="width:100%; text-align:left;" onchange="togglePhotoCustom()">
-                        <option value="Both sides of your Key">Both sides of your Key</option>
-                        <option value="Door Lock">Door Lock</option>
-                        <option value="Lock and Key">Lock and Key</option>
-                        <option value="Other">Other (Custom Text)...</option>
-                    </select>
-                </div>
-
-                <div class="form-group" id="custom-photo-group" style="display: none;">
-                    <label>Custom Photo Request Detail:</label>
-                    <input type="text" id="custom-photo-input" class="form-control" placeholder="e.g. ignition cylinder, car VIN plate..." oninput="updatePhotoSMS()">
-                </div>
-
-                <div class="form-group" style="flex:1; display:flex; flex-direction:column;">
-                    <label>SMS Preview:</label>
-                    <div id="photo-sms-preview" class="preview-box" style="margin-bottom:0;"></div>
-                </div>
-
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <button class="action-btn btn-gen" onclick="copySMS('photo-sms-preview', 'photo-toast')">📋 Copy SMS</button>
-                    <span id="photo-toast" class="copy-toast">✓ Copied!</span>
-                </div>
-            </div>
-
-            <!-- SMS MODULE 2: TICKET ASSIGNED -->
-            <div class="sms-card">
-                <h2>🎫 TICKET ASSIGNED SMS</h2>
-                
-                <div class="form-group">
-                    <label>Select Company:</label>
-                    <select id="assign-company" class="form-control" style="width:100%; text-align:left;" onchange="updateAssignSMS()">
-                        <option value="LA BEST Locksmith">L.A. Best Locksmith</option>
-                        <option value="A+ Security Lock & Key">A+ Security Lock & Key</option>
-                        <option value="Keys Locksmith">Keys Locksmith</option>
-                        <option value="A+ Capital Locksmith">A+ Capital Locksmith</option>
-                        <option value="Express Locksmith">Express Locksmith</option>
-                        <option value="Locksmith Blue Santa Monica">Locksmith Blue Santa Monica</option>
-                    </select>
-                </div>
-
-                <div class="form-group" style="flex:1; display:flex; flex-direction:column; margin-top: 10px;">
-                    <label>SMS Preview:</label>
-                    <div id="assign-sms-preview" class="preview-box" style="margin-bottom:0;"></div>
-                </div>
-
-                <div style="display: flex; gap: 10px; align-items: center;">
-                    <button class="action-btn btn-gen" onclick="copySMS('assign-sms-preview', 'assign-toast')">📋 Copy SMS</button>
-                    <span id="assign-toast" class="copy-toast">✓ Copied!</span>
-                </div>
-            </div>
-
-        </div>
-    </div>
 
 <script>
-/* ---------------- DISPATCH TAB DATA & LOGIC ---------------- */
-const houses = [
+/* --- CONFIRM REFRESH/EXIT PROMPT --- */
+window.addEventListener('beforeunload', function (e) {
+    e.preventDefault();
+    e.returnValue = '';
+});
+
+/* --- CUSTOM POPUP ALERT SYSTEM --- */
+function customAlert(msg, isError = false) {
+    document.getElementById('alert-modal-msg').innerText = msg;
+    const btn = document.getElementById('alert-modal-btn');
+    const header = document.getElementById('alert-modal-header');
+    const title = document.getElementById('alert-modal-title');
+    
+    if (isError) {
+        title.innerText = "⚠️ ERROR";
+        header.style.color = "#ff6b6b";
+        btn.innerText = "Close";
+        btn.className = "action-btn btn-reset";
+    } else {
+        title.innerText = "✅ SUCCESS";
+        header.style.color = "#d4af37";
+        btn.innerText = "Thanks!";
+        btn.className = "action-btn btn-gen";
+    }
+    document.getElementById('custom-alert-modal').style.display = 'flex';
+}
+
+function closeCustomAlert() {
+    document.getElementById('custom-alert-modal').style.display = 'none';
+}
+
+/* --- DISPATCH TAB DATA --- */
+const houseTechsList = [
     {r:"30%", n:"Moshe", o:"OFF every SAT"}, {r:"35%", n:"Gilad", o:"OFF every SAT"}, {r:"30%", n:"Ali", o:""},
     {r:"35%", n:"Tal", o:"OFF every SAT"}, {r:"30%", n:"Dmitriy", o:""}, {r:"30%", n:"Dennis", o:""},
     {r:"30%", n:"David0281", o:"OFF every SAT"}, {r:"35%", n:"Benjamin", o:""}, {r:"30%", n:"Shay", o:"Safe Lockout = N"},
     {r:"30%", n:"Uriel", o:""}
 ];
 
+const emergencyTechsList = [
+    {r:"50%", n:"Mazi", o:""}, {r:"50%", n:"Manny", o:""}, {r:"45%", n:"Mor", o:""}
+];
+
 const cars = [
     {r:"50%", n:"Yochai", o:"OFF every SAT til sun"}, {r:"45%", n:"Mor", o:""}, {r:"50%", n:"Manny", o:""},
     {r:"50%", n:"Kobi", o:"OFF every SAT"}, {r:"50%", n:"Dudu", o:"OFF every SAT"}, {r:"45%", n:"Inon", o:""},
-    {r:"50%", n:"Aaron", o:""}, {r:"40%", n:"Dennis", o:""}, {r:"45%", n:"Doron", o:"Mon-Fri"},
-    {r:"50%", n:"Nimrod", o:""}
+    {r:"40%", n:"Dennis", o:""}, {r:"45%", n:"Doron", o:"Mon-Fri"}, {r:"35%", n:"Benjamin", o:""},
+    {r:"50%", n:"Aaron", o:""}, {r:"50%", n:"Nimrod", o:""}
 ];
 
-const houseEmergencies = [
-    {r:"50%", n:"Mazi", o:""}, {r:"50%", n:"Manny", o:""}, {r:"45%", n:"Mor", o:""}
+const germans = [
+    {r:"50%", n:"Hannan", o:"OFF every SAT"},
+    {r:"50%", n:"Kobi", o:"OFF every SAT"},
+    {r:"50%", n:"Manny", o:""},
+    {r:"50%", n:"Dudu", o:"OFF every SAT"},
+    {r:"50%", n:"Aaron", o:""},
+    {r:"50%", n:"Nimrod", o:""}
 ];
 
 const motorcycles = [
     {r:"—", n:"Aaron", o:""}, {r:"—", n:"Kobi", o:""}, {r:"—", n:"Hanan", o:""}
-];
-
-const germans = [
-    {r:"40%", n:"David0281", o:""},
-    {r:"50%", n:"Hannan", o:"OFF every SAT"}, {r:"50%", n:"Kobi", o:"OFF every SAT"}, {r:"50%", n:"Manny", o:""},
-    {r:"50%", n:"Dudu", o:"OFF every SAT"}, {r:"50%", n:"Aaron", o:""}, {r:"50%", n:"Nimrod", o:""}
 ];
 
 const dnsList = [
@@ -425,40 +552,40 @@ const dnsList = [
     {r:"30%", n:"Amitai"}, {r:"40%", n:"Daniel"}
 ];
 
+let activeSectionId = null;
+let originalPastedNote = "";
+let acceptedTechSummaryText = "";
+
 function switchTab(tabId, btn) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-    
     document.getElementById(tabId).classList.add('active');
     btn.classList.add('active');
 }
 
-function build(list, id) {
-    const box = document.getElementById(id);
+function buildRows(list, containerId, prefix) {
+    const box = document.getElementById(containerId);
     box.innerHTML = '';
     list.forEach((t, i) => {
         const div = document.createElement('div');
         div.className = 'row';
-        
         let rateHtml = t.r !== "—" ? `<span class="rate-badge">${t.r}</span>` : `<span class="rate-badge"></span>`;
         let noteHtml = t.o ? t.o : '';
-        
+        const uniqueId = `${prefix}-${i}`;
         div.innerHTML = `
-            <select id="${id}-s-${i}" onchange="chg('${id}',${i})">
+            <select id="${uniqueId}-s" onchange="chg('${prefix}', ${i})">
                 <option value="none">❔</option>
-                <option value="noreply">🔵</option>
+                <option value="noreply">📵</option>
                 <option value="pass">❌</option>
                 <option value="ok">✅</option>
             </select>
-            
             <div class="tech-identity">
                 ${rateHtml}
                 <span class="name-label" title="${t.n}">${t.n}</span>
             </div>
-
-            <input type="text" id="${id}-r-${i}" class="reason-input" placeholder="Reason..." />
+            <input type="text" id="${uniqueId}-r" class="reason-input" placeholder="Reason..." />
             <div class="note-column" title="${noteHtml}">${noteHtml}</div>
-            <span id="${id}-m-${i}" class="msg"></span>
+            <span id="${uniqueId}-m" class="msg"></span>
         `;
         box.appendChild(div);
     });
@@ -482,13 +609,31 @@ function buildDNS() {
     });
 }
 
-function chg(id, i) {
-    const s = document.getElementById(`${id}-s-${i}`).value;
-    const msg = document.getElementById(`${id}-m-${i}`);
-    const reasonBox = document.getElementById(`${id}-r-${i}`);
+function chg(prefix, i) {
+    const selectElem = document.getElementById(`${prefix}-${i}-s`);
+    const s = selectElem.value;
+    const sectionKey = prefix.split('-')[0];
 
-    msg.innerText = (s === 'ok') ? "— Took the Job" : "";
+    if (s !== 'none') {
+        if (activeSectionId && activeSectionId !== sectionKey) {
+            const sectionNames = {
+                'h': 'House & Emergency Tech',
+                'c': 'Car Tech',
+                'g': 'German Tech',
+                'm': 'Motorcycles'
+            };
+            customAlert(`The [${sectionNames[activeSectionId]}] section is currently active. Reset choices or generate before switching sections.`, true);
+            selectElem.value = 'none';
+            return;
+        }
+        activeSectionId = sectionKey;
+    } else {
+        checkSectionActiveStatus(sectionKey);
+    }
 
+    const msg = document.getElementById(`${prefix}-${i}-m`);
+    const reasonBox = document.getElementById(`${prefix}-${i}-r`);
+    msg.innerText = (s === 'ok') ? "— Took Job" : "";
     if (s === 'pass') {
         reasonBox.style.display = 'inline-block';
         reasonBox.focus();
@@ -496,67 +641,290 @@ function chg(id, i) {
         reasonBox.style.display = 'none';
         reasonBox.value = '';
     }
-}
 
-function gen() {
-    let txt = "";
-    function loop(title, list, id) {
-        let temp = `=== ${title} ===\n`;
-        let active = false;
-        list.forEach((t, i) => {
-            const v = document.getElementById(`${id}-s-${i}`).value;
-            if (v === 'none') return;
-            active = true;
-            let icon = v === 'noreply' ? '🔵' : v === 'pass' ? '❌' : '✅';
-            let app = v === 'ok' ? ' - Took the Job' : '';
-            let rStr = t.r !== "—" ? `${t.r} ` : '';
-            
-            let reasonStr = '';
-            if (v === 'pass') {
-                const rVal = document.getElementById(`${id}-r-${i}`).value.trim();
-                if (rVal) reasonStr = ` (Reason: ${rVal})`;
-            }
-
-            temp += `${icon} ${rStr}${t.n}${app}${reasonStr}\n`;
-        });
-        if (active) txt += temp + "\n";
+    /* AUTO-GENERATE & AUTO-APPEND TO QUICK NOTES IF JOB ACCEPTED */
+    if (s === 'ok') {
+        let gridId, title;
+        if (sectionKey === 'h') { gridId = 'h-grid'; title = 'HOUSE & EMERGENCY TECH'; }
+        else if (sectionKey === 'c') { gridId = 'c-grid'; title = 'CAR TECH'; }
+        else if (sectionKey === 'g') { gridId = 'g-grid'; title = 'GERMAN TECH'; }
+        else if (sectionKey === 'm') { gridId = 'm-grid'; title = 'MOTORCYCLES'; }
+        
+        if (gridId) {
+            genSection(gridId, title);
+        }
+    } else {
+        // Check if any other tech is accepted in the active section
+        checkAndRefreshAcceptedStatus();
     }
-    loop("HOUSE TECH", houses, "h-grid");
-    loop("CAR TECH", cars, "c-grid");
-    loop("HOUSE TECH (EMERGENCY)", houseEmergencies, "he-grid");
-    loop("MOTORCYCLES", motorcycles, "m-grid");
-    loop("GERMAN TECH", germans, "g-grid");
-    
-    const out = document.getElementById('out');
-    const outBtnBox = document.getElementById('out-btn-box');
-    out.innerText = txt ? txt.trim() : "No actions marked yet.";
-    out.style.display = 'block';
-    outBtnBox.style.display = 'flex';
 }
 
-function copyDispatchText() {
-    const txt = document.getElementById('out').innerText;
-    if (!txt || txt === "No actions marked yet.") return;
+function checkAndRefreshAcceptedStatus() {
+    let hasAnyAccepted = false;
+    document.querySelectorAll('select[id$="-s"]').forEach(s => {
+        if (s.value === 'ok') hasAnyAccepted = true;
+    });
+    if (!hasAnyAccepted) {
+        acceptedTechSummaryText = "";
+        handleTicketActions(null);
+    }
+}
+
+function checkSectionActiveStatus(sectionKey) {
+    const selects = document.querySelectorAll(`select[id^="${sectionKey}-"]`);
+    let hasActive = false;
+    selects.forEach(sel => {
+        if (sel.value !== 'none') hasActive = true;
+    });
+    if (!hasActive && activeSectionId === sectionKey) {
+        activeSectionId = null;
+    }
+}
+
+/* GENERATE SECTION WITH ACCEPTED JOB FILTERING */
+function genSection(gridId, sectionTitle) {
+    let txt = "";
+    let active = false;
+
+    // Check if anyone accepted job in this section
+    let hasAccepted = false;
+    if (gridId === 'h-grid') {
+        houseTechsList.forEach((_, i) => {
+            const e = document.getElementById(`h-house-${i}-s`);
+            if (e && e.value === 'ok') hasAccepted = true;
+        });
+        emergencyTechsList.forEach((_, i) => {
+            const e = document.getElementById(`h-emerg-${i}-s`);
+            if (e && e.value === 'ok') hasAccepted = true;
+        });
+    } else {
+        let prefix = gridId === 'c-grid' ? 'c' : gridId === 'g-grid' ? 'g' : 'm';
+        let listData = gridId === 'c-grid' ? cars : gridId === 'g-grid' ? germans : motorcycles;
+        listData.forEach((_, i) => {
+            const e = document.getElementById(`${prefix}-${i}-s`);
+            if (e && e.value === 'ok') hasAccepted = true;
+        });
+    }
+
+    if (gridId === 'h-grid') {
+        let houseTxt = "";
+        houseTechsList.forEach((t, i) => {
+            const elem = document.getElementById(`h-house-${i}-s`);
+            if (!elem || elem.value === 'none') return;
+            if (hasAccepted && elem.value !== 'ok') return; // Exclude declined/passed
+            active = true;
+            let icon = elem.value === 'noreply' ? '📵' : elem.value === 'pass' ? '❌' : '✅';
+            let app = elem.value === 'ok' ? ' - Took the Job' : '';
+            let reasonStr = elem.value === 'pass' ? ` (${document.getElementById(`h-house-${i}-r`).value.trim()})` : elem.value === 'noreply' ? ' (No Reply)' : '';
+            houseTxt += `${icon} ${t.r} ${t.n}${app}${reasonStr}\n`;
+        });
+
+        let emergTxt = "";
+        emergencyTechsList.forEach((t, i) => {
+            const elem = document.getElementById(`h-emerg-${i}-s`);
+            if (!elem || elem.value === 'none') return;
+            if (hasAccepted && elem.value !== 'ok') return; // Exclude declined/passed
+            active = true;
+            let icon = elem.value === 'noreply' ? '📵' : elem.value === 'pass' ? '❌' : '✅';
+            let app = elem.value === 'ok' ? ' - Took the Job' : '';
+            let reasonStr = elem.value === 'pass' ? ` (${document.getElementById(`h-emerg-${i}-r`).value.trim()})` : elem.value === 'noreply' ? ' (No Reply)' : '';
+            emergTxt += `${icon} ${t.r} ${t.n}${app}${reasonStr}\n`;
+        });
+
+        if (houseTxt) txt += `[House Techs]\n${houseTxt}`;
+        if (emergTxt) txt += `${txt ? '\n' : ''}[Emergency Techs]\n${emergTxt}`;
+
+    } else {
+        let listData = gridId === 'c-grid' ? cars : gridId === 'g-grid' ? germans : motorcycles;
+        let prefix = gridId === 'c-grid' ? 'c' : gridId === 'g-grid' ? 'g' : 'm';
+
+        listData.forEach((t, i) => {
+            const elem = document.getElementById(`${prefix}-${i}-s`);
+            if (!elem || elem.value === 'none') return;
+            if (hasAccepted && elem.value !== 'ok') return; // Exclude declined/passed
+            active = true;
+            let icon = elem.value === 'noreply' ? '📵' : elem.value === 'pass' ? '❌' : '✅';
+            let app = elem.value === 'ok' ? ' - Took the Job' : '';
+            let rStr = t.r !== "—" ? `${t.r} ` : '';
+            let reasonStr = elem.value === 'pass' ? ` (${document.getElementById(`${prefix}-${i}-r`).value.trim()})` : elem.value === 'noreply' ? ' (No Reply)' : '';
+            txt += `${icon} ${rStr}${t.n}${app}${reasonStr}\n`;
+        });
+    }
+
+    if (active) {
+        const resultTxt = txt.trim();
+        
+        document.querySelectorAll('.section-result-box').forEach(el => el.style.display = 'none');
+        
+        const secResBox = document.getElementById(`${gridId}-res`);
+        if (secResBox) {
+            secResBox.innerHTML = `
+                <div class="section-result-header">
+                    <strong>📋 Result:</strong>
+                    <button class="action-btn btn-gen" style="padding:1px 6px; font-size:9px;" onclick="copySectionResult('${gridId}-res-val')">Copy</button>
+                </div>
+                <div id="${gridId}-res-val">${resultTxt}</div>
+            `;
+            secResBox.style.display = 'flex';
+        }
+
+        document.getElementById('modal-text').innerText = resultTxt;
+        document.getElementById('result-modal').style.display = 'flex';
+
+        // AUTO-ADD GENERATED TEXT TO QUICK DISPATCH NOTES IF JOB WAS ACCEPTED
+        if (hasAccepted) {
+            acceptedTechSummaryText = resultTxt;
+            handleTicketActions(null);
+        }
+    } else {
+        customAlert("No technicians selected in this section!", true);
+    }
+}
+
+function clearSectionChoices(sectionKey) {
+    const selects = document.querySelectorAll(`select[id^="${sectionKey}-"]`);
+    selects.forEach(s => {
+        s.value = 'none';
+        s.dispatchEvent(new Event('change'));
+    });
+    const resBox = document.getElementById(`${sectionKey}-grid-res`);
+    if (resBox) resBox.style.display = 'none';
+    if (activeSectionId === sectionKey) activeSectionId = null;
+    acceptedTechSummaryText = "";
+    handleTicketActions(null);
+}
+
+function copySectionResult(elemId) {
+    const txt = document.getElementById(elemId).innerText;
+    navigator.clipboard.writeText(txt).then(() => customAlert("Result copied to clipboard!", false));
+}
+
+function closeModal() {
+    document.getElementById('result-modal').style.display = 'none';
+}
+
+function copyModalText() {
+    const txt = document.getElementById('modal-text').innerText;
     navigator.clipboard.writeText(txt).then(() => {
-        const toast = document.getElementById('dispatch-toast');
+        const toast = document.getElementById('popup-toast');
         toast.style.display = 'inline';
         setTimeout(() => toast.style.display = 'none', 2000);
     });
 }
 
 function resetAll() {
-    build(houses, 'h-grid');
-    build(cars, 'c-grid');
-    build(houseEmergencies, 'he-grid');
-    build(motorcycles, 'm-grid');
-    build(germans, 'g-grid');
+    activeSectionId = null;
+    acceptedTechSummaryText = "";
+    buildRows(houseTechsList, 'h-grid-house', 'h-house');
+    buildRows(emergencyTechsList, 'h-grid-emerg', 'h-emerg');
+    buildRows(cars, 'c-grid', 'c');
+    buildRows(germans, 'g-grid', 'g');
+    buildRows(motorcycles, 'm-grid', 'm');
     buildDNS();
-    document.getElementById('out').style.display = 'none';
-    document.getElementById('out-btn-box').style.display = 'none';
+    document.querySelectorAll('.section-result-box').forEach(el => el.style.display = 'none');
+    handleTicketActions(null);
 }
 
+/* --- AUTOMATIC ULEADZ PASTE FORMATTER & MUTUALLY EXCLUSIVE TICKET ACTIONS --- */
+document.getElementById('dispatch-quick-note').addEventListener('paste', function(e) {
+    e.preventDefault();
+    let pastedText = (e.clipboardData || window.clipboardData).getData('text');
+    
+    if (pastedText.includes('Ticket:') || pastedText.includes('Name:') || pastedText.includes('Phone:')) {
+        let formatted = pastedText
+            .replace(/([^\n])(Ticket:)/gi, '$1\n$2')
+            .replace(/([^\n])(Name:)/gi, '$1\n$2')
+            .replace(/([^\n])(Phone:)/gi, '$1\n$2')
+            .replace(/([^\n])(Address:)/gi, '$1\n$2')
+            .replace(/([^\n])(Desc:)/gi, '$1\n$2')
+            .replace(/([^\n])(Request|Need|Client|Note)/gi, '$1\n$2');
+        
+        originalPastedNote = formatted.trim();
+    } else {
+        originalPastedNote = pastedText.trim();
+    }
+    
+    handleTicketActions(null);
+});
 
-/* ---------------- STORES TAB DATA & LOGIC ---------------- */
+function handleTicketActions(clickedElement) {
+    const chkEran = document.getElementById('chk-eran');
+    const chkEzra = document.getElementById('chk-ezra');
+    const chkClose = document.getElementById('chk-close');
+    const closeTechInput = document.getElementById('close-tech-name');
+
+    if (clickedElement) {
+        if (clickedElement.id === 'chk-eran' && chkEran.checked) {
+            chkEzra.checked = false;
+            chkClose.checked = false;
+            closeTechInput.value = '';
+        } else if (clickedElement.id === 'chk-ezra' && chkEzra.checked) {
+            chkEran.checked = false;
+            chkClose.checked = false;
+            closeTechInput.value = '';
+        } else if (clickedElement.id === 'chk-close') {
+            if (chkClose.checked) {
+                chkEran.checked = false;
+                chkEzra.checked = false;
+            } else {
+                closeTechInput.value = '';
+            }
+        }
+    }
+
+    const textarea = document.getElementById('dispatch-quick-note');
+    if (!originalPastedNote && textarea.value) {
+        originalPastedNote = textarea.value.split('\n\n')[0];
+    }
+    
+    let currentNote = originalPastedNote;
+    
+    document.getElementById('ezra-badge').style.display = chkEzra.checked ? 'inline-flex' : 'none';
+    document.getElementById('close-tech-box').style.display = chkClose.checked ? 'flex' : 'none';
+
+    // AUTO-ADD ACCEPTED TECH RESULT BELOW PASTED TEXT
+    if (acceptedTechSummaryText) {
+        currentNote += (currentNote ? "\n\n" : "") + acceptedTechSummaryText;
+    }
+
+    if (chkEran.checked) {
+        currentNote += (currentNote ? "\n\n" : "") + "Eran 🆗";
+    }
+
+    // CLOSE TICKET FORMATTING: 💰 ON TOP, Tech (Name) BELOW
+    if (chkClose.checked) {
+        const techName = closeTechInput.value.trim();
+        const techLabel = techName ? `Tech (${techName})` : `Tech`;
+        currentNote += (currentNote ? "\n\n" : "") + `💰\n${techLabel}`;
+    }
+
+    textarea.value = currentNote;
+    saveQuickNote();
+}
+
+function copyQuickNote() {
+    const txt = document.getElementById('dispatch-quick-note').value;
+    if (!txt) {
+        customAlert("Quick Dispatch Notes box is empty!", true);
+        return;
+    }
+    navigator.clipboard.writeText(txt).then(() => customAlert("Quick Dispatch Notes copied to clipboard!", false));
+}
+
+function clearQuickNote() {
+    document.getElementById('dispatch-quick-note').value = '';
+    document.getElementById('chk-eran').checked = false;
+    document.getElementById('chk-ezra').checked = false;
+    document.getElementById('chk-close').checked = false;
+    document.getElementById('close-tech-name').value = '';
+    document.getElementById('ezra-badge').style.display = 'none';
+    document.getElementById('close-tech-box').style.display = 'none';
+    originalPastedNote = '';
+    acceptedTechSummaryText = '';
+    localStorage.removeItem('dispatch_quick_note');
+}
+
+/* ---------------- STORES & SMS LOGIC ---------------- */
 const storeTexts = [
 `🔑 L.A. Best Locksmith
 Your local trusted locksmith.
@@ -620,10 +988,7 @@ Fri & Sat || 10:00am - 4:00pm
 Sun || CLOSED`
 ];
 
-let currentStoreIdx = 0;
-
 function selectStore(index, btnElement) {
-    currentStoreIdx = index;
     document.querySelectorAll('.store-btn').forEach(b => b.classList.remove('active'));
     btnElement.classList.add('active');
     document.getElementById('store-text-output').innerText = storeTexts[index];
@@ -638,16 +1003,9 @@ function copyStoreText() {
     });
 }
 
-
-/* ---------------- SMS TAB LOGIC ---------------- */
 function togglePhotoCustom() {
     const val = document.getElementById('photo-type').value;
-    const customGroup = document.getElementById('custom-photo-group');
-    if (val === 'Other') {
-        customGroup.style.display = 'flex';
-    } else {
-        customGroup.style.display = 'none';
-    }
+    document.getElementById('custom-photo-group').style.display = (val === 'Other') ? 'flex' : 'none';
     updatePhotoSMS();
 }
 
@@ -655,31 +1013,22 @@ function updatePhotoSMS() {
     const company = document.getElementById('photo-company').value;
     const photoTypeVal = document.getElementById('photo-type').value;
     let target = photoTypeVal;
-
     if (photoTypeVal === 'Other') {
         const customVal = document.getElementById('custom-photo-input').value.trim();
         target = customVal ? customVal : "[specified item]";
     }
-
-    const sms = `Hi! This is ${company}.
-
-Please reply with photo(s) of:
-• ${target}
-
-Thank you!`;
-
-    document.getElementById('photo-sms-preview').innerText = sms;
+    document.getElementById('photo-sms-preview').innerText = `Hi! This is ${company}.\n\nPlease reply with photo(s) of:\n• ${target}\n\nThank you!`;
 }
 
 function updateAssignSMS() {
     const company = document.getElementById('assign-company').value;
-    const sms = `Hi! This is ${company}.
-
-Your ticket has been assigned and your locksmith will call you shortly. Please keep your lines open.
-
-Thank you!`;
-
-    document.getElementById('assign-sms-preview').innerText = sms;
+    const status = document.getElementById('assign-status').value;
+    
+    if (status === 'enroute') {
+        document.getElementById('assign-sms-preview').innerText = `Hi! This is ${company}.\n\nYour ticket has been assigned and your locksmith will call you shortly. Please keep your lines open.\n\nThank you!`;
+    } else {
+        document.getElementById('assign-sms-preview').innerText = `Hi! This is ${company}.\n\nYour ticket has been assigned and your locksmith is trying to call you.\n\nPlease keep your lines open else provide us with a preferred call back time or call back number.\n\nThanks!`;
+    }
 }
 
 function copySMS(elementId, toastId) {
@@ -691,17 +1040,153 @@ function copySMS(elementId, toastId) {
     });
 }
 
+/* ---------------- NOTEPAD & PENDING TICKET LOGIC ---------------- */
+function saveNotepad(id) {
+    const val = document.getElementById(`np-${id}`).value;
+    localStorage.setItem(`dispatch_np_${id}`, val);
+}
+
+function clearNotepad(id) {
+    document.getElementById(`np-${id}`).value = '';
+    saveNotepad(id);
+    // ALSO CLEAR REMINDER INPUT FIELDS ACROSS BOTH TABS
+    document.getElementById('rem-input-dispatch').value = '';
+    document.getElementById('rem-input-np').value = '';
+}
+
+function loadNotepads() {
+    for (let i = 1; i <= 6; i++) {
+        const saved = localStorage.getItem(`dispatch_np_${i}`);
+        if (saved !== null) {
+            document.getElementById(`np-${i}`).value = saved;
+        }
+    }
+    const savedQuickNote = localStorage.getItem('dispatch_quick_note');
+    if (savedQuickNote !== null) {
+        document.getElementById('dispatch-quick-note').value = savedQuickNote;
+        originalPastedNote = savedQuickNote;
+    }
+}
+
+function saveQuickNote() {
+    const val = document.getElementById('dispatch-quick-note').value;
+    localStorage.setItem('dispatch_quick_note', val);
+}
+
+function sendNoteToTicket() {
+    const noteVal = document.getElementById('dispatch-quick-note').value.trim();
+    if (!noteVal) {
+        customAlert("Please write or paste a dispatch note first!", true);
+        return;
+    }
+    const ticketId = document.getElementById('target-ticket-select').value;
+    const ticketBox = document.getElementById(`np-${ticketId}`);
+    
+    if (ticketBox.value.trim() !== "") {
+        customAlert(`Error: Pending Ticket #${ticketId} already contains active notes! Please clear it first before saving a new note.`, true);
+        return;
+    }
+
+    const timeStamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    ticketBox.value = `--- [Note ${timeStamp}] ---\n${noteVal}`;
+    saveNotepad(ticketId);
+
+    const firstLine = noteVal.split('\n')[0];
+    const refText = `Ticket #${ticketId} Ref: ${firstLine.substring(0, 40)}${firstLine.length > 40 ? '...' : ''}`;
+    
+    // ATTACH ticketId SO DELETING REMINDER AUTO-CLEARS PENDING TICKET
+    reminders.push({ text: refText, done: false, ticketId: ticketId });
+    saveAndRenderReminders();
+
+    customAlert(`Note saved to Pending Ticket #${ticketId} and reference added to Reminders!`, false);
+}
+
+/* ---------------- REMINDERS LOGIC (CROSS-TAB SYNCED) ---------------- */
+let reminders = JSON.parse(localStorage.getItem('dispatch_reminders') || '[]');
+
+function syncReminderInput(source) {
+    const val = document.getElementById(source === 'np' ? 'rem-input-np' : 'rem-input-dispatch').value;
+    document.getElementById('rem-input-dispatch').value = val;
+    document.getElementById('rem-input-np').value = val;
+}
+
+function addReminder(source) {
+    const inputId = source === 'np' ? 'rem-input-np' : 'rem-input-dispatch';
+    const input = document.getElementById(inputId);
+    const text = input.value.trim();
+    if (!text) return;
+    
+    reminders.push({ text: text, done: false });
+    
+    // Clear inputs on both tabs
+    document.getElementById('rem-input-dispatch').value = '';
+    document.getElementById('rem-input-np').value = '';
+    
+    saveAndRenderReminders();
+}
+
+function toggleReminder(index) {
+    reminders[index].done = !reminders[index].done;
+    saveAndRenderReminders();
+}
+
+function deleteReminder(index) {
+    const item = reminders[index];
+    
+    // AUTO-CLEAR RESPECTIVE PENDING TICKET NOTE BOX IF DELETED REMINDER WAS LINKED TO A TICKET
+    if (item) {
+        let tId = item.ticketId;
+        if (!tId && item.text) {
+            const match = item.text.match(/^Ticket #(\d+)/i);
+            if (match) tId = match[1];
+        }
+        if (tId) {
+            clearNotepad(tId);
+        }
+    }
+
+    reminders.splice(index, 1);
+    saveAndRenderReminders();
+}
+
+function saveAndRenderReminders() {
+    localStorage.setItem('dispatch_reminders', JSON.stringify(reminders));
+    
+    const containers = [
+        document.getElementById('reminder-container-dispatch'),
+        document.getElementById('reminder-container-np')
+    ];
+
+    containers.forEach(container => {
+        if (container) {
+            container.innerHTML = '';
+            reminders.forEach((rem, idx) => {
+                const div = document.createElement('div');
+                div.className = `reminder-item ${rem.done ? 'completed' : ''}`;
+                div.innerHTML = `
+                    <input type="checkbox" ${rem.done ? 'checked' : ''} onchange="toggleReminder(${idx})">
+                    <span>${idx + 1}. ${rem.text}</span>
+                    <button class="btn-del" onclick="deleteReminder(${idx})" title="Delete Reminder & Clear Ticket">🗑️</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+    });
+}
+
 // Initializations
-build(houses, 'h-grid');
-build(cars, 'c-grid');
-build(houseEmergencies, 'he-grid');
-build(motorcycles, 'm-grid');
-build(germans, 'g-grid');
+buildRows(houseTechsList, 'h-grid-house', 'h-house');
+buildRows(emergencyTechsList, 'h-grid-emerg', 'h-emerg');
+buildRows(cars, 'c-grid', 'c');
+buildRows(germans, 'g-grid', 'g');
+buildRows(motorcycles, 'm-grid', 'm');
 buildDNS();
 
 selectStore(0, document.querySelector('.store-btn'));
 updatePhotoSMS();
 updateAssignSMS();
+loadNotepads();
+saveAndRenderReminders();
 </script>
 </body>
 </html>
